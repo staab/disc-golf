@@ -1,0 +1,117 @@
+import fs from 'fs'
+import path from 'path'
+import svelte from 'rollup-plugin-svelte'
+import resolve from '@rollup/plugin-node-resolve'
+import commonjs from '@rollup/plugin-commonjs'
+import replace from '@rollup/plugin-replace'
+import livereload from 'rollup-plugin-livereload'
+import { terser } from 'rollup-plugin-terser'
+
+const production = !process.env.ROLLUP_WATCH
+
+const rootDir = path.dirname(__filename)
+const srcDir = path.join(rootDir, "src")
+
+function getDirectories(path) {
+  return fs.readdirSync(path).filter(function(file) {
+    return fs.statSync(path + "/" + file).isDirectory()
+  })
+}
+
+// Allow absolute imports for anything inside src
+const absolutize = () => ({
+  resolveId(importee, importer) {
+    const [first, ...rest] = importee.split(path.sep)
+
+    let dir
+    if (getDirectories(srcDir).indexOf(first) > -1) {
+      dir = srcDir
+    } else {
+      return null
+    }
+
+    const fullPath = path.join(dir, importee).replace(/\.(js|svelte)$/, '')
+    const jsPath = fullPath + '.js'
+    const sveltePath = fullPath + '.svelte'
+
+    if (fs.existsSync(jsPath)) {
+      return jsPath
+    } else if (fs.existsSync(sveltePath)) {
+      return sveltePath
+    }
+
+    return null
+  },
+})
+
+export default {
+  input: 'src/main.js',
+  output: {
+    sourcemap: true,
+    format: 'iife',
+    name: 'app',
+    file: 'public/build/bundle.js'
+  },
+  plugins: [
+    absolutize(),
+  	replace({
+    	process: JSON.stringify({
+      	env: {
+          MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
+      	},
+    	}),
+  	}),
+    svelte({
+      // enable run-time checks when not in production
+      dev: !production,
+      // we'll extract any component CSS out into
+      // a separate file - better for performance
+      css: css => {
+        css.write('public/build/bundle.css')
+      }
+    }),
+
+    // If you have external dependencies installed from
+    // npm, you'll most likely need these plugins. In
+    // some cases you'll need additional configuration -
+    // consult the documentation for details:
+    // https://github.com/rollup/plugins/tree/master/packages/commonjs
+    resolve({
+      browser: true,
+      dedupe: ['svelte']
+    }),
+    commonjs(),
+
+    // In dev mode, call `npm run start` once
+    // the bundle has been generated
+    !production && serve(),
+
+    // Watch the `public` directory and refresh the
+    // browser on changes when not in production
+    !production && livereload('public'),
+
+    // If we're building for production (npm run build
+    // instead of npm run dev), minify
+    production && terser()
+  ],
+  watch: {
+    clearScreen: false
+  }
+}
+
+function serve() {
+  let started = false
+
+  return {
+    writeBundle() {
+      if (!started) {
+        started = true
+
+        require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+          stdio: ['ignore', 'inherit', 'inherit'],
+          shell: true
+        })
+      }
+    }
+  }
+}

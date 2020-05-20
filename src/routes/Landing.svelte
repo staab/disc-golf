@@ -41,9 +41,32 @@
     })
   })
 </script>
-<p class="pb-4">
+<p class="mb-4">
   Located in Troy, ID this short 9-hole technical course is great
   for skilled players and beginners alike. Holes are all par 3, but
   lots of hills and trees create a fun challenge.
 </p>
-<div bind:this={mapElement} style="height: 30vh" class="border border-solid border-gray-600" />
+<div bind:this={mapElement} style="height: 30vh" class="shadow mb-4" />
+<div class="flex justify-center pt-8 pb-10">
+  <button class="bg-red-500 rounded py-2 px-4 font-bold">
+    Start Scorecard
+  </button>
+</div>
+<div class="flex justify-between mb-4">
+  <h2 class="font-bold">Best Scores</h2>
+  <span>
+    <i class="fas fa-calendar-alt" />
+    Last 30 days
+  </span>
+</div>
+<table>
+</table>
+<div class="flex justify-between mb-4">
+  <h2 class="font-bold">Fastest Times</h2>
+  <span>
+    <i class="fas fa-calendar-alt" />
+    Last 30 days
+  </span>
+</div>
+<table>
+</table>

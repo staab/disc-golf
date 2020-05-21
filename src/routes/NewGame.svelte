@@ -55,7 +55,7 @@
       {#if idx > 0}
         <span class="pl-2 cursor-pointer" on:click={() => removePlayer(idx)}>
           <i class="fas fa-times" />
-          <span class="pl-1 text-underline">Remove Player</span>
+          <span class="pl-1 text-underline hidden sm:inline">Remove Player</span>
         </span>
       {/if}
     </div>

@@ -57,6 +57,7 @@ export default {
   	replace({
     	process: JSON.stringify({
       	env: {
+          PRODUCTION: production,
           MAPBOX_TOKEN: process.env.MAPBOX_TOKEN,
           BACKENDLESS_APP_ID: process.env.BACKENDLESS_APP_ID,
           BACKENDLESS_API_KEY: process.env.BACKENDLESS_API_KEY,

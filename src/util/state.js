@@ -1,9 +1,16 @@
-export const getState = () =>
-  JSON.parse(localStorage.getItem('state') || '{}')
+import {writable, derived, get} from 'svelte/store'
+import {prop} from 'util/misc.js'
 
-export const setState = state =>
-  localStorage.setItem('state', JSON.stringify({...getState(), ...state}))
+const defaultState = JSON.stringify({players: [], game: null})
 
-export const replaceState = state =>
-  localStorage.setItem('state', JSON.stringify(state))
+export const store = writable(JSON.parse(localStorage.getItem('store') || defaultState))
+export const players = derived(store, prop('players'))
+export const game = derived(store, prop('game'))
 
+store.subscribe($store => {
+  if (!process.env.PRODUCTION) {
+    console.log($store)
+  }
+
+  localStorage.setItem('store', JSON.stringify($store))
+})

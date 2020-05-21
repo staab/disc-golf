@@ -6,8 +6,8 @@
   import Leaderboard from 'partials/Leaderboard'
   import Map from 'partials/Map'
 
-  const bestScores = listBestScores()
-  const bestTimes = listBestTimes()
+  const bestScores = listBestScores({limit: 5})
+  const bestTimes = listBestTimes({limit: 5})
 
   const mapCallback = map => {
     L.marker([start.lon, start.lat]).addTo(map).bindPopup(`<b>Start</b>`)
@@ -33,4 +33,10 @@
   </Link>
 </div>
 <Leaderboard title="Best Scores" promise={bestScores} />
+<div class="flex justify-center pb-12 underline">
+  <Link to="/leaders">More</Link>
+</div>
 <Leaderboard title="Fastest Times" promise={bestTimes} />
+<div class="flex justify-center pb-12 underline">
+  <Link to="/leaders">More</Link>
+</div>

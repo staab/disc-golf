@@ -1,4 +1,6 @@
 export const formatTime = duration => {
+  duration = duration / 1000
+
   const minutes = Math.round(duration / 60)
   const seconds = Math.floor(duration % 60).toString().padStart(2, '0')
 
@@ -11,3 +13,7 @@ export const formatScore = (score, par) => {
 
   return `${score} (${sign}${diff})`
 }
+
+export const sum = xs => xs.reduce((a, b) => a + b, 0)
+
+export const prop = k => x => x[k]

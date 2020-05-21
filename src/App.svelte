@@ -4,6 +4,7 @@
   import NewGame from 'routes/NewGame'
   import CurrentGame from 'routes/CurrentGame'
   import Scores from 'routes/Scores'
+  import Leaders from 'routes/Leaders'
   import Next from 'routes/Next'
   import Hole from 'routes/Hole'
 
@@ -22,8 +23,9 @@
     <Router {url}>
       <Route path="new" component={NewGame} />
       <Route path="game" component={CurrentGame} />
-      <Route path="*" component={Scores} />
+      <Route path="scores" component={Scores} />
       <Route path="next" component={Next} />
+      <Route path="leaders" component={Leaders} />
       <Route path="hole/:id" component={Hole} />
       <Route path="*"><Landing /></Route>
     </Router>

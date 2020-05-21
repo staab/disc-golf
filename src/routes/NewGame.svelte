@@ -1,50 +1,50 @@
 <script>
   import {onMount} from 'svelte'
   import {navigate} from "svelte-routing"
-  import {replaceState} from "util/state.js"
+  import {players, store} from "util/state.js"
 
-  let players = []
-  let error = null
+  let error = ''
 
   const addPlayer = () => {
     error = ""
-    players = players.concat({
-      name: '',
-      id: Math.random(),
-      scores: [],
-    })
+    $store.players = $players.concat({name: '', id: Math.random()})
   }
 
   const removePlayer = idx => {
     error = ""
-    players = players.filter((_, i) => i !== idx)
+    $store.players = $players.filter((_, i) => i !== idx)
   }
 
   const startGame = () => {
-    if (players.find(({name}) => !name)) {
+    if ($players.find(({name}) => !name)) {
       error = "Please enter names for all players"
 
       return
     }
 
-    replaceState({
-      players,
+    $store.game = {
+      id: Math.random().toString().slice(2),
+      step: 0,
+      end: null,
       start: new Date().valueOf(),
-      holeIdx: 0,
-    })
+      course: 'duthie-park',
+      players: $players.map(player => ({...player, scores: []})),
+    }
 
     navigate('/game')
   }
 
   onMount(() => {
-    addPlayer()
+    if ($players.length === 0) {
+      addPlayer()
+    }
   })
 </script>
 
 <h1 class="font-bold uppercase pb-4">New Game — 9 Holes</h1>
 <div class="pb-2">Players</div>
 <div class="pb-2">
-  {#each players as player, idx (player.id)}
+  {#each $players as player, idx (player.id)}
     <div class="pb-1">
       <input
         class="rounded px-3 py-2 text-gray-900"

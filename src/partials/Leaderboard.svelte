@@ -1,33 +1,28 @@
 <script>
+  import {formatTime, formatScore} from 'util/misc.js'
+
   export let title
   export let promise
 
   const par = 27
-
-  const formatScore = ({score}) => {
-    const sign = score >= par ? "+" : "-"
-    const diff = Math.abs(score - par)
-
-    return `${score} (${sign}${diff})`
-  }
 </script>
 
 {#await promise}
 <span />
 {:then scores}
 <div class="flex justify-between mb-2">
-  <h2 class="font-bold">{title}</h2>
+  <h2 class="font-bold uppercase">{title}</h2>
   <span>
     <i class="fas fa-calendar-alt" />
     Last 30 days
   </span>
 </div>
 <table class="w-full mb-4">
-  {#each scores as score}
-  <tr>
-    <td>{score.player}</td>
-    <td class="text-right">{score.time}</td>
-    <td class="text-right">{formatScore(score)}</td>
+  {#each scores as score, idx}
+  <tr class="border-gray-600 border-solid" class:border-t={idx > 0}>
+    <td class="p-2">{score.player}</td>
+    <td class="p-2 text-right">{formatTime(score.duration)}</td>
+    <td class="p-2 text-right">{formatScore(score.score, par)}</td>
   </tr>
   {:else}
   <tr>

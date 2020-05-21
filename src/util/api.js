@@ -14,7 +14,7 @@ export const listBestScores = () => {
 export const listBestTimes = () => {
   const qb = Backendless.DataQueryBuilder.create()
 
-  qb.setSortBy(['time'])
+  qb.setSortBy(['duration asc'])
 
   return Score.find(qb)
 }

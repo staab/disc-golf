@@ -1,6 +1,6 @@
-Using backendless for the server, currently deploying to duthie-dg.surge.sh. A lot of stuff is hard-coded at the moment, but is sort of set up to be configurable, probably at build time, then we'll deploy multiple websites and optimize SEO for each.
+Using Backendless for the server, currently deploying to Netlify, using Google domains for the domain (anhyzer.io).
 
-Deploy to something that can serve the index on any path. Netlify? AWS? Name it "roller.io"
+A lot of stuff is hard-coded at the moment, but is sort of set up to be configurable, probably at build time, then we'll deploy multiple websites and optimize SEO for each.
 
 Add ads using one of these: https://bloggingwizard.com/best-google-adsense-alternatives/
 

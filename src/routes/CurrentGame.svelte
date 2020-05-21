@@ -58,9 +58,11 @@
   }
 
   const discard = () => {
-    navigate('/')
+    if (confirm("Are you sure you want to discard this game?")) {
+      navigate('/')
 
-    $store.game = null
+      $store.game = null
+    }
   }
 
   const done = () => {

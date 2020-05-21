@@ -5,3 +5,7 @@ A lot of stuff is hard-coded at the moment, but is sort of set up to be configur
 Add ads using one of these: https://bloggingwizard.com/best-google-adsense-alternatives/
 
 Alternatively, use affiliate links with Amazon, https://infinitediscs.com/Affiliate-Program, or http://hyzerflip.com/affiliate/login. If all we have is links, write out ~30 fun blurbs that people will actually read. Don't include ads in all of them.
+
+# Todo
+
+[ ] Add page to view past score sheets/games

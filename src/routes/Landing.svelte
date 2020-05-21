@@ -6,7 +6,7 @@
   import Leaderboard from 'partials/Leaderboard'
   import Map from 'partials/Map'
 
-  const bestScores = listBestScores({limit: 5})
+  const bestScores = listBestScores({limit: 5, })
   const bestTimes = listBestTimes({limit: 5})
 
   const mapCallback = map => {
@@ -27,9 +27,9 @@
 <Map {view} callback={mapCallback} />
 <div class="flex justify-center pt-8 pb-10">
   <Link to="/new">
-    <button class="bg-red-500 rounded py-2 px-4 font-bold">
+    <span class="bg-red-500 rounded py-2 px-4 font-bold">
       Start Game
-    </button>
+    </span>
   </Link>
 </div>
 <Leaderboard title="Best Scores" promise={bestScores} />

@@ -10,8 +10,8 @@
 <Leaderboard title="Fastest Times" promise={bestTimes} />
 <div class="flex justify-center pt-8 pb-10">
   <Link to="/">
-    <button class="bg-red-500 rounded py-2 px-4 font-bold">
+    <span class="bg-red-500 rounded py-2 px-4 font-bold">
       Back Home
-    </button>
+    </span>
   </Link>
 </div>

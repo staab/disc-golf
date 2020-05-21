@@ -9,10 +9,6 @@
   let durationTimeout
   let error = ''
 
-  if (!$game) {
-    navigate('/')
-  }
-
   const setDuration = () => {
     duration = (new Date().valueOf() - $game.start)
 
@@ -75,7 +71,13 @@
     }
   }
 
-  onMount(() => setDuration())
+  onMount(() => {
+    if (!$game) {
+      navigate('/')
+    } else {
+      setDuration()
+    }
+  })
 
   onDestroy(() => clearTimeout(durationTimeout))
 </script>

@@ -61,6 +61,12 @@
     }
   }
 
+  const discard = () => {
+    navigate('/')
+
+    $store.game = null
+  }
+
   const done = () => {
     if (checkScores()) {
       $store.game.end = new Date().valueOf()
@@ -75,7 +81,10 @@
 </script>
 
 <div class="flex justify-between pb-4">
-  <h1 class="font-bold uppercase">Current Game — 9 Holes</h1>
+  <div>
+    <h1 class="font-bold uppercase">Current Game — 9 Holes</h1>
+    <small class="underline cursor-pointer" on:click={discard}>Discard</small>
+  </div>
   <span class="font-mono">{formatTime(duration)}</span>
 </div>
 <table class="mb-4 w-full">
@@ -112,7 +121,7 @@
 {/each}
 <div class="text-red-500 text-center m-4">&nbsp;{error}&nbsp;</div>
 <div class="h-12 bg-red-500 fixed shadow bottom-0 left-0 right-0 font-bold w-full">
-  <div class="container m-auto relative">
+  <div class="container max-w-xl m-auto relative">
     {#if $game.step > 0}
       <div on:click={prev} class="absolute left-0 p-3 underline cursor-pointer">
         <i class="fas fa-caret-left" />

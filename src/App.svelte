@@ -10,7 +10,7 @@
   import {game} from 'util/state.js'
 
   export let url = "";
-	export let name = 'Duthie Course';
+	export let name = 'Duthie Park Disc Golf Course';
 
 	let sideNavIsOpen = false
 

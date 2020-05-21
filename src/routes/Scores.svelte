@@ -52,7 +52,7 @@
 </style>
 
 <div class="flex justify-between pb-4">
-  <h1 class="font-bold uppercase">Game Summary</h1>
+  <h2 class="font-bold uppercase">Game Summary</h2>
   <span class="font-mono">{formatTime(duration)}</span>
 </div>
 

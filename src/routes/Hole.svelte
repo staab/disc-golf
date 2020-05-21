@@ -12,6 +12,6 @@
   }
 </script>
 
-<h1 class="font-bold uppercase pb-2">{hole.name}</h1>
+<h2 class="font-bold uppercase pb-2">{hole.name}</h2>
 <div class="pb-2">Par {hole.par}</div>
 <Map {view} callback={mapCallback} />

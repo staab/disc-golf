@@ -82,7 +82,7 @@
 
 <div class="flex justify-between pb-4">
   <div>
-    <h1 class="font-bold uppercase">Current Game — 9 Holes</h1>
+    <h2 class="font-bold uppercase">Current Game — 9 Holes</h2>
     <small class="underline cursor-pointer" on:click={discard}>Discard</small>
   </div>
   <span class="font-mono">{formatTime(duration)}</span>
@@ -107,7 +107,7 @@
 </div>
 {#each $game.players as player, playerIdx}
   <div class="flex justify-between pb-4">
-    <h2>{player.name}</h2>
+    <h3>{player.name}</h3>
     <div class="flex justify-end items-center">
       <i
         class="fas fa-minus-circle text-red-500 cursor-pointer"

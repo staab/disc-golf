@@ -41,7 +41,7 @@
   })
 </script>
 
-<h1 class="font-bold uppercase pb-4">New Game — 9 Holes</h1>
+<h2 class="font-bold uppercase pb-4">New Game — 9 Holes</h2>
 <div class="pb-2">Players</div>
 <div class="pb-2">
   {#each $players as player, idx (player.id)}

@@ -91,7 +91,7 @@
 <div class="mb-4 h-px bg-gray-600" />
 <div class="flex justify-between pb-2">
   <td class="font-bold" on:click={() => navigate(`/hole/${$game.step}`)}>
-    <i class="fas fa-map-marker text-red-500 cursor-pointer" />
+    <i class="fas fa-map-marker-alt text-red-500 cursor-pointer" />
     <span class="pl-2">{holes[$game.step].name}</span>
   </td>
   <span>Par {holes[$game.step].par}</span>

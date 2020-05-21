@@ -5,7 +5,7 @@
 <h1 class="text-bold my-4 font-bold">Your scores have been submitted!</h1>
 <div class="flex flex-col">
   <Link to="/new">
-    <i class="fas fa-address-card" />
+    <i class="fas fa-paper-plane" />
     <span class="pl-1 underline">Start a new Game</span>
   </Link>
   <Link to="/leaders">

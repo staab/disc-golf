@@ -1,6 +1,10 @@
 <script>
   import {onMount} from 'svelte'
+  import {listBestScores, listBestTimes} from 'util/api.js'
+  import Leaderboard from 'partials/Leaderboard'
 
+  const bestScores = listBestScores()
+  const bestTimes = listBestTimes()
   const view = {lon: 46.7396579, lat: -116.7687484, zoom: 17}
   const holes = [
     {name: 'Start', lon: 46.739667, lat: -116.768900},
@@ -52,21 +56,5 @@
     Start Scorecard
   </button>
 </div>
-<div class="flex justify-between mb-4">
-  <h2 class="font-bold">Best Scores</h2>
-  <span>
-    <i class="fas fa-calendar-alt" />
-    Last 30 days
-  </span>
-</div>
-<table>
-</table>
-<div class="flex justify-between mb-4">
-  <h2 class="font-bold">Fastest Times</h2>
-  <span>
-    <i class="fas fa-calendar-alt" />
-    Last 30 days
-  </span>
-</div>
-<table>
-</table>
+<Leaderboard title="Best Scores" promise={bestScores} />
+<Leaderboard title="Fastest Times" promise={bestTimes} />

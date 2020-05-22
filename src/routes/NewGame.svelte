@@ -27,11 +27,11 @@
       step: 0,
       end: null,
       start: new Date().valueOf(),
-      course: 'duthie-park',
-      players: $players.map(player => ({...player, scores: []})),
+      course: 'Duthie Park',
+      scoreCards: $players.map(({name}) => ({player: name, scores: []})),
     }
 
-    navigate('/game')
+    navigate('/game/current')
   }
 
   onMount(() => {

@@ -15,18 +15,18 @@
     durationTimeout = setTimeout(setDuration, 1000)
   }
 
-  const inc = playerIdx => {
-    const currentScore = $store.game.players[playerIdx].scores[$game.step] || 0
+  const inc = cardIdx => {
+    const currentScore = $store.game.scoreCards[cardIdx].scores[$game.step] || 0
 
     error = ''
 
-    $store.game.players[playerIdx].scores[$game.step] = currentScore + 1
+    $store.game.scoreCards[cardIdx].scores[$game.step] = currentScore + 1
   }
 
-  const dec = playerIdx => {
-    const currentScore = $store.game.players[playerIdx].scores[$game.step] || 0
+  const dec = cardIdx => {
+    const currentScore = $store.game.scoreCards[cardIdx].scores[$game.step] || 0
 
-    $store.game.players[playerIdx].scores[$game.step] = Math.max(0, currentScore - 1)
+    $store.game.scoreCards[cardIdx].scores[$game.step] = Math.max(0, currentScore - 1)
   }
 
   const prev = () => {
@@ -36,7 +36,7 @@
   }
 
   const checkScores = () => {
-    const anythingNotScored = $game.players.some(({scores}) =>
+    const anythingNotScored = $game.scoreCards.some(({scores}) =>
       holes.slice(0, $game.step + 1).some((_, idx) => !scores[idx])
     )
 
@@ -69,7 +69,7 @@
     if (checkScores()) {
       $store.game.end = new Date().valueOf()
 
-      navigate('/scores')
+      navigate('/game/submit')
     }
   }
 
@@ -92,11 +92,11 @@
   <span class="font-mono">{formatTime(duration)}</span>
 </div>
 <table class="mb-4 w-full">
-{#each $game.players as player, playerIdx}
+{#each $game.scoreCards as card, cardIdx}
   <tr>
-    <td>{player.name}</td>
+    <td>{card.player}</td>
     <td class="text-right">
-      {player.scores.reduce((a, b) => a + b, 0)} Throws
+      {card.scores.reduce((a, b) => a + b, 0)} Throws
     </td>
   </tr>
 {/each}
@@ -109,17 +109,17 @@
   </td>
   <span>Par {holes[$game.step].par}</span>
 </div>
-{#each $game.players as player, playerIdx}
+{#each $game.scoreCards as card, cardIdx}
   <div class="flex justify-between pb-4">
-    <h3>{player.name}</h3>
+    <h3>{card.player}</h3>
     <div class="flex justify-end items-center">
       <i
         class="fas fa-minus-circle text-red-500 cursor-pointer"
-        on:click={() => dec(playerIdx)}/>
-      <div class="font-mono w-8 text-center">{player.scores[$game.step] || 0}</div>
+        on:click={() => dec(cardIdx)}/>
+      <div class="font-mono w-8 text-center">{card.scores[$game.step] || 0}</div>
       <i
         class="fas fa-plus-circle text-red-500 cursor-pointer"
-        on:click={() => inc(playerIdx)}/>
+        on:click={() => inc(cardIdx)}/>
     </div>
   </div>
 {/each}

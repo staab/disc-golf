@@ -4,7 +4,7 @@
 
 <h2 class="text-bold my-4 font-bold">Your scores have been submitted!</h2>
 <div class="flex flex-col">
-  <Link to="/new">
+  <Link to="/game/new">
     <i class="fas fa-paper-plane" />
     <span class="pl-1 underline">Start a new Game</span>
   </Link>

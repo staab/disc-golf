@@ -3,9 +3,10 @@
   import Landing from 'routes/Landing'
   import NewGame from 'routes/NewGame'
   import CurrentGame from 'routes/CurrentGame'
-  import Scores from 'routes/Scores'
+  import SubmitScores from 'routes/SubmitScores'
+  import GameOver from 'routes/GameOver'
+  import ViewGame from 'routes/ViewGame'
   import Leaders from 'routes/Leaders'
-  import Next from 'routes/Next'
   import Hole from 'routes/Hole'
   import {game} from 'util/state.js'
 
@@ -26,6 +27,10 @@
 </script>
 
 <style>
+  .top-nav {
+    z-index: 9999;
+  }
+
   .side-nav {
     z-index: 9999;
     pointer-events: none;
@@ -47,7 +52,7 @@
 <main
   class="bg-gray-700 inset-0 absolute text-white overflow-auto"
   on:click={closeSideNav}>
-  <div class="h-10 bg-red-500 p-2 fixed w-full shadow">
+  <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav">
     <div class="container max-w-xl m-auto sm:px-3">
       <i class="fas fa-bars absolute pt-1 cursor-pointer" on:click={openSideNav} />
       <h1 class="text-center">{name}</h1>
@@ -55,10 +60,11 @@
   </div>
   <Router {url}>
     <div class="container max-w-xl m-auto mt-10 p-3">
-      <Route path="new" component={NewGame} />
-      <Route path="game" component={CurrentGame} />
-      <Route path="scores" component={Scores} />
-      <Route path="next" component={Next} />
+      <Route path="game/new" component={NewGame} />
+      <Route path="game/current" component={CurrentGame} />
+      <Route path="game/submit" component={SubmitScores} />
+      <Route path="game/complete" component={GameOver} />
+      <Route path="game/:id" component={ViewGame} />
       <Route path="leaders" component={Leaders} />
       <Route path="hole/:id" component={Hole} />
       <Route path="*"><Landing /></Route>
@@ -72,14 +78,14 @@
           </Link>
         </li>
         <li class="p-2 cursor-pointer">
-          <Link to="/new">
+          <Link to="/game/new">
             <i class="fas fa-paper-plane" />
             <span class="pl-1 underline">Start a new Game</span>
           </Link>
         </li>
         {#if $game && new Date().valueOf() - $game.start < 24 * 60 * 60 * 1000}
         <li class="p-2 cursor-pointer">
-          <Link to="/game">
+          <Link to="/game/current">
             <i class="fas fa-history" />
             <span class="pl-1 underline">Resume Game</span>
           </Link>

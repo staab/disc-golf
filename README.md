@@ -9,3 +9,4 @@ Alternatively, use affiliate links with Amazon, https://infinitediscs.com/Affili
 # Todo
 
 [ ] Add page to view past score sheets/games
+[ ] Handle errors when submitting scores, show empty results when retrieving stuff

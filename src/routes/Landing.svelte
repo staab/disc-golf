@@ -26,7 +26,7 @@
 </p>
 <Map {view} callback={mapCallback} />
 <div class="flex justify-center pt-8 pb-10">
-  <Link to="/new">
+  <Link to="/game/new">
     <span class="bg-red-500 rounded py-2 px-4 font-bold">
       Start Game
     </span>

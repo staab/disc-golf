@@ -11,7 +11,7 @@
   import {game} from 'util/state.js'
 
   export let url = "";
-	export let name = 'Duthie Park Disc Golf Course';
+	export let title = 'Duthie Park Disc Golf Course';
 
 	let sideNavIsOpen = false
 
@@ -49,13 +49,25 @@
   }
 </style>
 
+<svelte:head>
+	<title>{title}</title>
+	<meta
+  	name="description"
+  	content="Find a map of the Duthie Park disc golf course in Troy, ID.
+          	 Keep track of your score and view the leaderboards!">
+	<meta property="og:title" content={title} />
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://duthie-park.anhyzer.io" />
+	<meta property="og:image" content="https://anhyzer.io/basket.jpg" />
+</svelte:head>
+
 <main
   class="bg-gray-700 inset-0 absolute text-white overflow-auto"
   on:click={closeSideNav}>
   <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav">
     <div class="container max-w-xl m-auto sm:px-3">
       <i class="fas fa-bars absolute pt-1 cursor-pointer" on:click={openSideNav} />
-      <h1 class="text-center">{name}</h1>
+      <h1 class="text-center">{title}</h1>
     </div>
   </div>
   <Router {url}>

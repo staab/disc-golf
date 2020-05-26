@@ -49,6 +49,7 @@
   }
 </style>
 
+{#if title}
 <svelte:head>
 	<title>{title}</title>
 	<meta
@@ -60,6 +61,7 @@
 	<meta property="og:url" content="https://duthie-park.anhyzer.io" />
 	<meta property="og:image" content="https://anhyzer.io/basket.jpg" />
 </svelte:head>
+{/if}
 
 <main
   class="bg-gray-700 inset-0 absolute text-white overflow-auto"

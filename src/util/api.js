@@ -5,7 +5,7 @@ export const ScoreCard = Backendless.Data.of('score_card')
 
 export const listBestScores = ({limit}) => {
   const qb = Backendless.DataQueryBuilder.create()
-  const date = new Date().valueOf() - 30 * 60 * 60 * 1000
+  const date = new Date().valueOf() - 30 * 24 * 60 * 60 * 1000
 
   qb.setPageSize(limit)
   qb.setSortBy(['score'])
@@ -16,7 +16,7 @@ export const listBestScores = ({limit}) => {
 
 export const listBestTimes = ({limit}) => {
   const qb = Backendless.DataQueryBuilder.create()
-  const date = new Date().valueOf() - 30 * 60 * 60 * 1000
+  const date = new Date().valueOf() - 30 * 24 * 60 * 60 * 1000
 
   qb.setPageSize(limit)
   qb.setSortBy(['duration asc'])

@@ -50,9 +50,9 @@
 </style>
 
 <main
-  class="bg-gray-700 inset-0 absolute text-white  overflow-y-scroll"
+  class="bg-gray-200 inset-0 absolute overflow-y-scroll"
   on:click={closeSideNav}>
-  <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav">
+  <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav text-white">
     <div class="container max-w-xl m-auto sm:px-3">
       <i class="fas fa-bars absolute pt-1 cursor-pointer" on:click={openSideNav} />
       <h1 class="text-center">{name}</h1>

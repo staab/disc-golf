@@ -45,7 +45,7 @@ try {
       compression({threshold: 0}),
       sirv("public", {dev: NODE_ENV === "development"}),
       (req, res, next) => {
-        const [subdomain] = req.hostname === 'localhost' ? ['duthie-park'] : req.subdomains
+        const [subdomain] = req.hostname === 'localhost' || req.hostname === '192.168.0.4' ? ['duthie-park'] : req.subdomains
         const course = courses[subdomain]
         const url = course ? `https://${subdomain}.anhyzer.io` : 'https://anhyzer.io'
         const title = course ? `${course.name} Disc Golf Course` : 'Disc Golf Courses'

@@ -5,6 +5,7 @@
   import {sum, prop, formatTime, formatScore} from 'util/misc.js'
   import {Game, ScoreCard} from 'util/api.js'
   import ScoreCards from 'partials/ScoreCards'
+  import Card from 'partials/Card'
 
   if (!$game) {
     navigate('/')
@@ -51,11 +52,13 @@
   <h2 class="font-bold uppercase">Game Summary</h2>
   <span class="font-mono">{formatTime(duration)}</span>
 </div>
-<ScoreCards scoreCards={$game.scoreCards} />
+<Card>
+  <ScoreCards scoreCards={$game.scoreCards} />
+</Card>
 <div class="text-red-500 pt-4 text-center">&nbsp;{error}&nbsp;</div>
 <div class="flex justify-center align-center pt-8 pb-10">
   <div>
-    <button class="bg-red-500 rounded py-2 px-4 mb-2 font-bold" on:click={submitScores}>
+    <button class="bg-red-500 rounded py-2 px-4 mb-2 font-bold text-white" on:click={submitScores}>
       Submit Scores
     </button>
     <div class="text-sm text-center">

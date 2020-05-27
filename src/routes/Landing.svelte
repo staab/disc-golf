@@ -1,9 +1,9 @@
 <script>
-  import {blur} from 'svelte/transition'
   import {Link} from "svelte-routing"
   import {listBestScores, listBestTimes} from 'util/api.js'
   import {view, start, holes} from 'util/course.js'
   import Leaderboard from 'partials/Leaderboard'
+  import Card from 'partials/Card'
   import Map from 'partials/Map'
 
   const bestScores = listBestScores({limit: 5, })
@@ -19,7 +19,7 @@
     })
   }
 </script>
-<div in:blur>
+<Card>
   <p class="mb-4">
     Located in Troy, ID this short 9-hole technical course is great
     for skilled players and beginners alike. Holes are all par 3, but
@@ -28,11 +28,11 @@
   <Map {view} callback={mapCallback} />
   <div class="flex justify-center pt-8 pb-10">
     <Link to="/game/new">
-      <span class="bg-red-500 rounded py-2 px-4 font-bold">
+      <span class="bg-red-500 rounded py-2 px-4 font-bold text-white">
         Start Game
       </span>
     </Link>
   </div>
-  <Leaderboard title="Best Scores" promise={bestScores} more="/leaders" />
-  <Leaderboard title="Fastest Times" promise={bestTimes} more="/leaders" />
-</div>
+</Card>
+<Leaderboard title="Best Scores" promise={bestScores} more="/leaders" />
+<Leaderboard title="Fastest Times" promise={bestTimes} more="/leaders" />

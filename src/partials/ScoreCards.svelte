@@ -26,13 +26,13 @@
 </style>
 
 <div class="flex relative">
-  <table class="players border-gray-600 border-solid border-r">
+  <table class="players border-gray-300 border-solid border-r">
     <tr>
       <th class="font-bold">Player</th>
     </tr>
     {#each scoreCards as scoreCard, idx}
       <tr>
-        <td class="border-gray-600 border-solid" class:border-t={idx > 0}>
+        <td class="border-gray-300 border-solid border-t">
           {scoreCard.player}
         </td>
       </tr>
@@ -47,7 +47,7 @@
         {/each}
       </tr>
       {#each scoreCards as scoreCard, idx}
-        <tr class="border-gray-600 border-solid" class:border-t={idx > 0}>
+        <tr class="border-gray-300 border-solid border-t">
           <td class="text-right">{formatScore(sum(scoreCard.scores), totalPar)}</td>
           {#each holes as hole, idx}
             <td class="text-right">{formatScore(scoreCard.scores[idx], hole.par)}</td>

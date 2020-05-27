@@ -1,8 +1,10 @@
 <script>
   import {Link} from 'svelte-routing'
+  import {blur} from 'svelte/transition'
   import {findGame, findScoresByGame} from 'util/api.js'
   import {formatTime} from 'util/misc.js'
   import ScoreCards from 'partials/ScoreCards'
+  import Card from 'partials/Card'
 
   export let id
 
@@ -19,14 +21,21 @@
   </div>
   <span class="font-mono">{formatTime(game.end - game.start)}</span>
 </div>
-<ScoreCards scoreCards={scoreCards} />
+<Card>
+  <ScoreCards scoreCards={scoreCards} />
+</Card>
 {:catch error}
 We weren't able to load this game, please go back and try again.
 {/await}
-<div class="flex justify-center pt-8 pb-10">
+
+{#await promise}
+<span />
+{:then}
+<div class="flex justify-center pt-8 pb-10" in:blur>
   <Link to="/">
-    <span class="bg-red-500 rounded py-2 px-4 font-bold">
+    <span class="bg-red-500 rounded py-2 px-4 font-bold text-white">
       Back Home
     </span>
   </Link>
 </div>
+{/await}

@@ -4,6 +4,7 @@
   import {holes} from 'util/course.js'
   import {game, store} from 'util/state.js'
   import {formatTime} from 'util/misc.js'
+  import Card from 'partials/Card'
 
   let duration = 0
   let durationTimeout
@@ -85,10 +86,7 @@
 </script>
 
 <div class="flex justify-between pb-4">
-  <div>
-    <h2 class="font-bold uppercase">Current Game — 9 Holes</h2>
-    <small class="underline cursor-pointer" on:click={discard}>Discard</small>
-  </div>
+  <h2 class="font-bold uppercase">Current Game — 9 Holes</h2>
   <span class="font-mono">{formatTime(duration)}</span>
 </div>
 <table class="mb-4 w-full">
@@ -101,30 +99,34 @@
   </tr>
 {/each}
 </table>
-<div class="mb-4 h-px bg-gray-600" />
-<div class="flex justify-between pb-2">
-  <td class="font-bold" on:click={() => navigate(`/hole/${$game.step}`)}>
-    <i class="fas fa-map-marker-alt text-red-500 cursor-pointer" />
-    <span class="pl-2">{holes[$game.step].name}</span>
-  </td>
-  <span>Par {holes[$game.step].par}</span>
-</div>
-{#each $game.scoreCards as card, cardIdx}
-  <div class="flex justify-between pb-4">
-    <h3>{card.player}</h3>
-    <div class="flex justify-end items-center">
-      <i
-        class="fas fa-minus-circle text-red-500 cursor-pointer"
-        on:click={() => dec(cardIdx)}/>
-      <div class="font-mono w-8 text-center">{card.scores[$game.step] || 0}</div>
-      <i
-        class="fas fa-plus-circle text-red-500 cursor-pointer"
-        on:click={() => inc(cardIdx)}/>
-    </div>
+<Card>
+  <div class="flex justify-between pb-2">
+    <td class="font-bold" on:click={() => navigate(`/hole/${$game.step}`)}>
+      <i class="fas fa-map-marker-alt text-red-500 cursor-pointer" />
+      <span class="pl-2">{holes[$game.step].name}</span>
+    </td>
+    <span>Par {holes[$game.step].par}</span>
   </div>
-{/each}
-<div class="text-red-500 text-center m-4">&nbsp;{error}&nbsp;</div>
-<div class="h-12 bg-red-500 fixed shadow bottom-0 left-0 right-0 font-bold w-full">
+  {#each $game.scoreCards as card, cardIdx}
+    <div class="flex justify-between pb-4">
+      <h3>{card.player}</h3>
+      <div class="flex justify-end items-center">
+        <i
+          class="fas fa-minus-circle text-red-500 cursor-pointer"
+          on:click={() => dec(cardIdx)}/>
+        <div class="font-mono w-8 text-center">{card.scores[$game.step] || 0}</div>
+        <i
+          class="fas fa-plus-circle text-red-500 cursor-pointer"
+          on:click={() => inc(cardIdx)}/>
+      </div>
+    </div>
+  {/each}
+</Card>
+<div class="-mt-2">
+  <small class="underline cursor-pointer" on:click={discard}>Discard Game</small>
+</div>
+<div class="text-red-500 text-center p-10">&nbsp;{error}&nbsp;</div>
+<div class="h-12 bg-red-500 fixed shadow bottom-0 left-0 right-0 font-bold w-full text-white">
   <div class="container max-w-xl m-auto relative">
     {#if $game.step > 0}
       <div on:click={prev} class="absolute left-0 p-3 underline cursor-pointer">

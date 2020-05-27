@@ -14,7 +14,7 @@
 {:then}
 <div class="flex justify-center pt-8 pb-10">
   <Link to="/">
-    <span class="bg-red-500 rounded py-2 px-4 font-bold">
+    <span class="bg-red-500 rounded py-2 px-4 font-bold text-white">
       Back Home
     </span>
   </Link>

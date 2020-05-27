@@ -50,7 +50,7 @@
 </style>
 
 <main
-  class="bg-gray-700 inset-0 absolute text-white overflow-auto"
+  class="bg-gray-700 inset-0 absolute text-white  overflow-y-scroll"
   on:click={closeSideNav}>
   <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav">
     <div class="container max-w-xl m-auto sm:px-3">

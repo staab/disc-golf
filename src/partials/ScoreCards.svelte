@@ -1,5 +1,5 @@
 <script>
-  import {holes} from 'util/config.js'
+  import {holes} from 'util/course.js'
   import {sum, prop, formatScore} from 'util/misc.js'
 
   export let scoreCards

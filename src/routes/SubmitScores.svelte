@@ -1,7 +1,6 @@
 <script>
   import {onMount, onDestroy} from 'svelte'
   import {navigate, Link} from 'svelte-routing'
-  import {holes} from 'util/config.js'
   import {store, game} from 'util/state.js'
   import {sum, prop, formatTime, formatScore} from 'util/misc.js'
   import {Game, ScoreCard} from 'util/api.js'

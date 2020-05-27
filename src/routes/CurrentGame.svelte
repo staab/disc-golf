@@ -1,7 +1,7 @@
 <script>
   import {onMount, onDestroy} from 'svelte'
   import {navigate} from 'svelte-routing'
-  import {holes} from 'util/config.js'
+  import {holes} from 'util/course.js'
   import {game, store} from 'util/state.js'
   import {formatTime} from 'util/misc.js'
 

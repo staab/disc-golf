@@ -1,5 +1,5 @@
 <script>
-  import {view, holes} from 'util/config.js'
+  import {view, holes} from 'util/course.js'
   import Map from 'partials/Map'
 
   export let id

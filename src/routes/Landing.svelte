@@ -2,7 +2,7 @@
   import {onMount} from 'svelte'
   import {Link} from "svelte-routing"
   import {listBestScores, listBestTimes} from 'util/api.js'
-  import {view, start, holes} from 'util/config.js'
+  import {view, start, holes} from 'util/course.js'
   import Leaderboard from 'partials/Leaderboard'
   import Map from 'partials/Map'
 

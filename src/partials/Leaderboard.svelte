@@ -1,6 +1,6 @@
 <script>
   import {Link} from 'svelte-routing'
-  import {holes} from 'util/config.js'
+  import {holes} from 'util/course.js'
   import {sum, prop, formatTime, formatScore} from 'util/misc.js'
 
   export let title

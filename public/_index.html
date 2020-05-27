@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>{title}</title>
+	<title>{{TITLE}}</title>
 
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta property="og:title" content="{{TITLE}}" />
 	<meta
   	name="description"
-  	content="Find a map of the Duthie Park disc golf course in Troy, ID.
+  	content="Find a map of the {{TITLE}}.
           	 Keep track of your score and view the leaderboards!">
-	<meta property="og:title" content="Duthie Park Disc Golf Course" />
 	<meta property="og:type" content="website" />
-	<meta property="og:url" content="https://duthie-park.anhyzer.io" />
+	<meta property="og:url" content="{{URL}}" />
 	<meta property="og:image" content="https://anhyzer.io/basket.jpg" />
 
 	<link rel="icon" type="image/svg" href="/frisbee.svg">
@@ -30,9 +30,9 @@
 	        integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
 	        crossorigin=""></script>
   <script src="https://api.backendless.com/sdk/js/latest/backendless.min.js"></script>
+  <script type="text/javascript">window.course = JSON.parse('{{COURSE}}')</script>
   <script defer src="/build/bundle.js"></script>
 </head>
-
 <body>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <script>
   import {onMount} from 'svelte'
   import {navigate} from "svelte-routing"
+  import {name} from 'util/course.js'
   import {players, store} from "util/state.js"
 
   let error = ''
@@ -27,7 +28,7 @@
       step: 0,
       end: null,
       start: new Date().valueOf(),
-      course: 'Duthie Park',
+      course: name,
       scoreCards: $players.map(({name}) => ({player: name, scores: []})),
     }
 

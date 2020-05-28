@@ -7,4 +7,8 @@ if (process.env.PRODUCTION) {
     gtag('config', 'UA-89355375-3')
 }
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+}
+
 export default new App({target: document.body})

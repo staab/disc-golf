@@ -1,4 +1,4 @@
-Using Backendless for the server, currently deploying to Netlify, using Google domains for the domain (anhyzer.io).
+Using Backendless for the server, currently deploying to Heroku, using Google domains for the domain (anhyzer.io).
 
 A lot of stuff is hard-coded at the moment, but is sort of set up to be configurable, probably at build time, then we'll deploy multiple websites and optimize SEO for each. Some suggested SEO stuff might be open graph (https://ogp.me/) and schema.org https://schema.org/docs/gs.html
 
@@ -8,5 +8,8 @@ Alternatively, use affiliate links with Amazon, https://infinitediscs.com/Affili
 
 # Todo
 
-[ ] Add page to view past score sheets/games
-[ ] Handle errors when submitting scores, show empty results when retrieving stuff
+[x] Add page to view past score sheets/games
+[x] Handle errors when submitting scores, show empty results when retrieving stuff
+[x] Add directory
+[ ] PWA-ize
+[ ] Add a way to enter scores/times in manually (maybe this won't be necessary with it being a PWA)

@@ -1,0 +1,17 @@
+{
+  "name": "Anhyzer",
+  "short_name": "Anhyzer Disc Golf Scoreboard",
+  "start_url": "/?source=pwa",
+  "display": "fullscreen",
+  "background_color": "#edf2f7",
+  "theme_color": "#f56565",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/app-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any maskable"
+    }
+  ]
+}

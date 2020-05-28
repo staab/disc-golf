@@ -27,6 +27,21 @@ const courses = {
   },
 }
 
+const courseList = Object.entries(courses).map(
+  ([subdomain, {name, view, holes, city}]) =>
+    ({subdomain, name, view, holes: holes.length, city})
+)
+
+const getSubdomain = req => {
+  if (req.query.hasOwnProperty('subdomain')) {
+    return req.query.subdomain
+  } else if (req.hostname === 'localhost' || req.hostname === '192.168.0.4') {
+    return 'duthie-park'
+  }
+
+  return req.subdomains[0]
+}
+
 try {
   express()
     .use((req, res, next) => {
@@ -45,8 +60,8 @@ try {
       compression({threshold: 0}),
       sirv("public", {dev: NODE_ENV === "development"}),
       (req, res, next) => {
-        const [subdomain] = req.hostname === 'localhost' || req.hostname === '192.168.0.4' ? ['duthie-park'] : req.subdomains
-        const course = courses[subdomain]
+        const subdomain = getSubdomain(req)
+        const course = courses[subdomain] || null
         const url = course ? `https://${subdomain}.anhyzer.io` : 'https://anhyzer.io'
         const title = course ? `${course.name} Disc Golf Course` : 'Disc Golf Courses'
 
@@ -64,6 +79,7 @@ try {
               .replace(/{{URL}}/g, url)
               .replace(/{{TITLE}}/g, title)
               .replace(/{{COURSE}}/g, JSON.stringify(course))
+              .replace(/{{COURSE_LIST}}/g, JSON.stringify(courseList))
           )
         })
       }

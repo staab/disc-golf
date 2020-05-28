@@ -1,5 +1,8 @@
 <script>
   import {Router, Route, Link} from "svelte-routing"
+  import {name} from 'util/course.js'
+  import {game} from 'util/state.js'
+  import Index from 'routes/Index'
   import Landing from 'routes/Landing'
   import NewGame from 'routes/NewGame'
   import CurrentGame from 'routes/CurrentGame'
@@ -8,8 +11,8 @@
   import ViewGame from 'routes/ViewGame'
   import Leaders from 'routes/Leaders'
   import Hole from 'routes/Hole'
-  import {name} from 'util/course.js'
-  import {game} from 'util/state.js'
+  import Card from 'partials/Card'
+  import Map from 'partials/Map'
 
   export let url = "";
 
@@ -54,10 +57,13 @@
   on:click={closeSideNav}>
   <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav text-white">
     <div class="container max-w-xl m-auto sm:px-3">
+      {#if name}
       <i class="fas fa-bars absolute pt-1 cursor-pointer" on:click={openSideNav} />
-      <h1 class="text-center">{name}</h1>
+      {/if}
+      <h1 class="text-center">{name || "Disc Golf Scoreboard"}</h1>
     </div>
   </div>
+  {#if name}
   <Router {url}>
     <div class="container max-w-xl m-auto mt-10 p-3">
       <Route path="game/new" component={NewGame} />
@@ -100,4 +106,9 @@
       </ul>
     </div>
   </Router>
+  {:else}
+  <div class="container max-w-xl m-auto mt-10 p-3">
+    <Index />
+  </div>
+  {/if}
 </main>

@@ -2,6 +2,7 @@
   import {Router, Route, Link} from "svelte-routing"
   import {name} from 'util/course.js'
   import {game} from 'util/state.js'
+  import {replaceSubdomain} from 'util/misc.js'
   import Index from 'routes/Index'
   import Landing from 'routes/Landing'
   import NewGame from 'routes/NewGame'
@@ -76,7 +77,7 @@
       <Route path="*"><Landing /></Route>
     </div>
     <div class="side-nav h-full w-full fixed top-0 left-0" class:side-nav-open={sideNavIsOpen}>
-      <ul class="mt-10 pt-2 bg-gray-100 shadow h-full text-gray-900">
+      <ul class="mt-10 pt-2 pl-2 bg-gray-100 shadow h-full text-gray-900">
         <li class="p-2 cursor-pointer">
           <Link to="/">
             <i class="fas fa-home" />
@@ -102,6 +103,12 @@
             <i class="fas fa-list-ol" />
             <span class="pl-1 underline">View Leaderboard</span>
           </Link>
+        </li>
+        <li class="p-2 cursor-pointer">
+          <a href="{replaceSubdomain('www')}">
+            <i class="fas fa-map-marker-alt" />
+            <span class="pl-1 underline">All Courses</span>
+          </a>
         </li>
       </ul>
     </div>

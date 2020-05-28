@@ -1,15 +1,14 @@
 <script>
+  import {replaceSubdomain} from 'util/misc.js'
   import Card from 'partials/Card'
   import Map from 'partials/Map'
 
   const view = {lon: 46.7396579, lat: -116.7687484, zoom: 13}
-  const host = window.location.host.split('.').slice(-2).join('.')
-  const buildUrl = subdomain => `https://${subdomain}.${host}`
 
   const mapCallback = map => {
     window.courseList.forEach(({subdomain, name, view, holes}) => {
       L.marker([view.lon, view.lat]).addTo(map).bindPopup(`
-        <a href="${buildUrl(subdomain)}">${name}</a> — ${holes} holes
+        <a href="${replaceSubdomain(subdomain)}">${name}</a> — ${holes} holes
       `)
     })
   }
@@ -25,7 +24,7 @@
   <ul>
   {#each window.courseList as {subdomain, name, holes, city}}
     <li>
-      <a class="text-red-500" href="{buildUrl(subdomain)}">{name}</a> in {city}
+      <a class="text-red-500" href="{replaceSubdomain(subdomain)}">{name}</a> in {city}
       — {holes} holes
     </li>
   {/each}

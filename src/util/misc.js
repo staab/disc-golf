@@ -17,3 +17,10 @@ export const formatScore = (score, par) => {
 export const sum = xs => xs.reduce((a, b) => a + b, 0)
 
 export const prop = k => x => x[k]
+
+export const replaceSubdomain = subdomain => {
+  const {host, protocol} = window.location
+  const newHost = host.split('.').slice(-2).join('.')
+
+  return `${protocol}//${subdomain}.${newHost}`
+}

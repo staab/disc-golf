@@ -3,7 +3,8 @@
   import Map from 'partials/Map'
 
   const view = {lon: 46.7396579, lat: -116.7687484, zoom: 13}
-  const buildUrl = subdomain => `https://${subdomain}.${window.location.host}`
+  const host = window.location.host.split('.').slice(-2).join('.')
+  const buildUrl = subdomain => `https://${subdomain}.${host}`
 
   const mapCallback = map => {
     window.courseList.forEach(({subdomain, name, view, holes}) => {

@@ -1,11 +1,18 @@
 import {registerRoute} from 'workbox-routing'
 import {BackgroundSyncPlugin} from 'workbox-background-sync'
-import {NetworkOnly, NetworkFirst} from 'workbox-strategies'
+import {NetworkOnly, NetworkFirst, StaleWhileRevalidate} from 'workbox-strategies'
 
 registerRoute(
   ({request}) => ['script', 'style'].includes(request.destination),
   new NetworkFirst({
     cacheName: 'scriptsAndStyles',
+  })
+)
+
+registerRoute(
+  ({request}) => ['font', 'image'].includes(request.destination),
+  new StaleWhileRevalidate({
+    cacheName: 'fontsAndImages',
   })
 )
 

@@ -12,7 +12,6 @@ export const ScoreCard = Backendless.Data.of('score_card')
 export const listBestScores = ({limit}) => {
   const qb = Backendless.DataQueryBuilder.create()
   const date = daysAgo(30)
-  console.log(date)
 
   qb.setPageSize(limit)
   qb.setSortBy(['score'])

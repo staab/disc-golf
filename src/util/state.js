@@ -3,6 +3,7 @@ import {prop} from 'util/misc.js'
 
 const defaultState = JSON.stringify({players: [], game: null})
 
+export const online = writable(navigator.onLine)
 export const store = writable(JSON.parse(localStorage.getItem('store') || defaultState))
 export const players = derived(store, prop('players'))
 export const game = derived(store, prop('game'))

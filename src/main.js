@@ -8,7 +8,7 @@ if (process.env.PRODUCTION) {
 }
 
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('/service-worker.js')
+  navigator.serviceWorker.register('/sw.js')
 }
 
 export default new App({target: document.body})

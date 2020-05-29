@@ -11,5 +11,7 @@ Alternatively, use affiliate links with Amazon, https://infinitediscs.com/Affili
 [x] Add page to view past score sheets/games
 [x] Handle errors when submitting scores, show empty results when retrieving stuff
 [x] Add directory
-[ ] PWA-ize
+[x] Intercept and cache scoreboard via sw when offline
+[ ] Handle online/offline events and give folks hints that it's ok to submit scores when offline
 [ ] Add a way to enter scores/times in manually (maybe this won't be necessary with it being a PWA)
+[ ] Add fun ads

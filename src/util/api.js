@@ -1,11 +1,18 @@
+import {round} from 'util/misc'
+
 Backendless.initApp(process.env.BACKENDLESS_APP_ID, process.env.BACKENDLESS_API_KEY)
+
+// Round so that we can cache scores for ~1 hour in service worker
+const daysAgo = days =>
+  round(new Date().valueOf() - days * 24 * 60 * 60 * 1000, 6)
 
 export const Game = Backendless.Data.of('game')
 export const ScoreCard = Backendless.Data.of('score_card')
 
 export const listBestScores = ({limit}) => {
   const qb = Backendless.DataQueryBuilder.create()
-  const date = new Date().valueOf() - 30 * 24 * 60 * 60 * 1000
+  const date = daysAgo(30)
+  console.log(date)
 
   qb.setPageSize(limit)
   qb.setSortBy(['score'])
@@ -16,7 +23,7 @@ export const listBestScores = ({limit}) => {
 
 export const listBestTimes = ({limit}) => {
   const qb = Backendless.DataQueryBuilder.create()
-  const date = new Date().valueOf() - 30 * 24 * 60 * 60 * 1000
+  const date = daysAgo(30)
 
   qb.setPageSize(limit)
   qb.setSortBy(['duration asc'])

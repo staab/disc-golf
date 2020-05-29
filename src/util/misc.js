@@ -24,3 +24,9 @@ export const replaceSubdomain = subdomain => {
 
   return `${protocol}//${subdomain}.${newHost}`
 }
+
+export const round = (n, digits = 0) => {
+  const magnitude = Math.pow(10, digits)
+
+  return Math.round(n / magnitude) * magnitude
+}

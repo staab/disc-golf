@@ -1,39 +1,39 @@
 import {registerRoute} from 'workbox-routing'
 import {BackgroundSyncPlugin} from 'workbox-background-sync'
-import {NetworkOnly, NetworkFirst, StaleWhileRevalidate} from 'workbox-strategies'
-
-const jsonResponse = data =>
-  new Response(JSON.stringify(data), {
-    headers: {'Content-Type': 'application/json'}
-  })
+import {NetworkOnly, NetworkFirst} from 'workbox-strategies'
 
 registerRoute(
-  ({request}) => request.destination === 'script',
+  ({request}) => ['script', 'style'].includes(request.destination),
   new NetworkFirst({
-    cacheName: 'scripts',
-  })
-)
-
-registerRoute(
-  ({request}) => request.destination === 'style',
-  new StaleWhileRevalidate({
-    cacheName: 'styles',
+    cacheName: 'scriptsAndStyles',
   })
 )
 
 const matchBackendless = ({url, request}) =>
   url.origin.includes('api.backendless.com')
 
-const backendlessHandler = new NetworkOnly({
-  cacheName: 'backendless',
+registerRoute(
+  matchBackendless,
+  new NetworkFirst({
+    cacheName: 'backendlessData',
+  })
+)
+
+const backendlessEffectHandler = new NetworkOnly({
+  cacheName: 'backendlessEffects',
   plugins: [
     new BackgroundSyncPlugin('backendless-queue', {maxRetentionTime: 24 * 60}),
   ],
 })
 
-const handleBackendless = async req => {
+const jsonResponse = data =>
+  new Response(JSON.stringify(data), {
+    headers: {'Content-Type': 'application/json'}
+  })
+
+const handleBackendlessEffect = async req => {
   try {
-    return await backendlessHandler.handle(req)
+    return await backendlessEffectHandler.handle(req)
   } catch (e) {
     if (e.toString().includes('no-response')) {
       return jsonResponse({error: 'offline'})
@@ -43,5 +43,5 @@ const handleBackendless = async req => {
   }
 }
 
-registerRoute(matchBackendless, handleBackendless, 'POST')
-registerRoute(matchBackendless, handleBackendless, 'PUT')
+registerRoute(matchBackendless, handleBackendlessEffect, 'POST')
+registerRoute(matchBackendless, handleBackendlessEffect, 'PUT')

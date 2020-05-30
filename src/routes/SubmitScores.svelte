@@ -11,26 +11,47 @@
     navigate('/')
   }
 
-  const duration = $game.end - $game.start
+  let timeInput
+  let editedTime = null
+
+  const startEditingTime = () => {
+    editedTime = formatTime($game.duration)
+
+    setTimeout(() => timeInput.select())
+  }
+
+  const saveTimeEdit = () => {
+    const matches = editedTime.match(/^(\d+):([0-5]\d)\.?(\d{1,2})?$/)
+
+    if (!matches) {
+      return alert("Please enter your time in this format: mm:ss")
+    }
+
+    const [m, s, cs] = matches.slice(1).map(x => parseInt(x, 10))
+
+    $game.duration = m * 60 * 1000 + s * 1000 + (cs || 0) * 10
+    editedTime = null
+  }
 
   const submitScores = async () => {
-    await Promise.all([
-      Game.save({
-        id: $game.id,
-        end: $game.end,
-        start: $game.start,
-        course: $game.course,
-      }),
-      ScoreCard.bulkCreate(
-        $game.scoreCards.map(({player, scores}) => ({
-          player,
-          game: $game.id,
-          score: sum(scores),
-          scores: JSON.stringify(scores),
-          duration,
-        }))
-      ),
-    ])
+    if (!window.avoidSideEffects) {
+      await Promise.all([
+        Game.save({
+          id: $game.id,
+          course: $game.course,
+          duration: $game.duration,
+        }),
+        ScoreCard.bulkCreate(
+          $game.scoreCards.map(({player, scores}) => ({
+            player,
+            game: $game.id,
+            score: sum(scores),
+            scores: JSON.stringify(scores),
+            duration: $game.duration,
+          }))
+        ),
+      ])
+    }
 
     navigate('/game/complete')
 
@@ -38,9 +59,35 @@
   }
 </script>
 
-<div class="flex justify-between pb-4">
+<style>
+  .heading {
+    height: 3rem;
+  }
+
+  input {
+    line-height: 0.9;
+    padding: 0 1px;
+    width: 83px;
+  }
+</style>
+
+<div class="flex justify-between pb-4 heading">
   <h2 class="font-bold uppercase">Game Summary</h2>
-  <span class="font-mono">{formatTime(duration)}</span>
+  {#if editedTime}
+  <div class="font-mono">
+    <input
+      type="text"
+      class="rounded text-gray-900 border-gray-500 border border-solid text-right"
+      bind:this={timeInput}
+      bind:value={editedTime} />
+    <i class="fa fa-check text-red-500 cursor-pointer" on:click={saveTimeEdit} />
+  </div>
+  {:else}
+  <span class="font-mono cursor-pointer" on:click={startEditingTime}>
+    {formatTime($game.duration)}
+    <i class="fa fa-edit text-red-500" />
+  </span>
+  {/if}
 </div>
 <Card>
   <ScoreCards scoreCards={$game.scoreCards} />

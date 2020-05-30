@@ -11,4 +11,7 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('/sw.js')
 }
 
+// Debug hooks
+window.avoidSideEffects = false
+
 export default new App({target: document.body})

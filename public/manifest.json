@@ -12,16 +12,6 @@
       "type": "image/svg+xml",
       "sizes": "any",
       "purpose": "any maskable"
-    },
-    {
-      "src": "/app-icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "192x192"
-    },
-    {
-      "src": "/app-icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "512x512"
     }
   ]
 }

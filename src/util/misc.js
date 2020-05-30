@@ -1,10 +1,41 @@
+import {writable} from 'svelte/store'
+
+export const copy = x => {
+  if (x instanceof Array) return [...x]
+  if (x instanceof Object) return {...x}
+
+  return x
+}
+
+export const getPath = (path, data) => {
+  let result = data
+
+  path.forEach(p => {
+    result = data[p]
+  })
+
+  return result
+}
+
+export const setProp = (p, data, value) => {
+  let result = copy(data)
+
+  result[p] = value
+
+  return result
+}
+
+export const setPath = ([p, ...path], data, value) =>
+  path.length ? setPath(path, data[p], value) : setProp(p, data, value)
+
 export const formatTime = duration => {
   duration = duration / 1000
 
   const minutes = Math.floor(duration / 60)
   const seconds = Math.floor(duration % 60).toString().padStart(2, '0')
+  const hundredths = Math.floor(duration * 100 % 100).toString().padStart(2, '0')
 
-  return `${minutes}:${seconds}`
+  return `${minutes}:${seconds}.${hundredths}`
 }
 
 export const formatScore = (score, par) => {
@@ -29,4 +60,25 @@ export const round = (n, digits = 0) => {
   const magnitude = Math.pow(10, digits)
 
   return Math.round(n / magnitude) * magnitude
+}
+
+export class Timer {
+  constructor() {
+    this.elapsed = writable(0)
+  }
+  subscribe(f) {
+    return this.elapsed.subscribe(f)
+  }
+  start(startTime) {
+    this.start = startTime || new Date().valueOf()
+    this.timeout = this.tick()
+  }
+  stop() {
+    clearTimeout(this.timeout)
+  }
+  tick() {
+    this.elapsed.set(new Date().valueOf() - this.start)
+
+    return requestAnimationFrame(() => this.tick())
+  }
 }

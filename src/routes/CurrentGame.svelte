@@ -1,150 +1,65 @@
 <script>
-  import {onMount, onDestroy} from 'svelte'
+  import {onMount, onDestroy, setContext} from 'svelte'
+  import {writable} from 'svelte/store'
   import {navigate} from 'svelte-routing'
   import {holes} from 'util/course.js'
-  import {game, store} from 'util/state.js'
-  import {formatTime} from 'util/misc.js'
-  import Card from 'partials/Card'
+  import {game, store, cursor} from 'util/state.js'
+  import {formatTime, Timer} from 'util/misc.js'
+  import SpeedMode from 'partials/SpeedMode'
+  import ClassicMode from 'partials/ClassicMode'
+  import ManualMode from 'partials/ManualMode'
 
-  let duration = 0
-  let durationTimeout
-  let error = ''
+  const timer = new Timer()
+  const error = writable('')
 
-  const setDuration = () => {
-    duration = (new Date().valueOf() - $game.start)
+  const controls = {
+    error,
+    getScore(card, step) {
+      return $store.game.scoreCards[card].scores[step] || 0
+    },
+    setScore(card, step, value) {
+      $store.game.scoreCards[card].scores[step] = value
 
-    durationTimeout = setTimeout(setDuration, 1000)
+      error.set('')
+    },
+    discard: () => {
+      if (confirm("Are you sure you want to discard this game?")) {
+        navigate('/')
+
+        setTimeout(() => {
+          $store.game = null
+        })
+      }
+    },
+    done: () => {
+      if (!$error) {
+        $store.game.duration = $timer
+
+        navigate('/game/submit')
+      }
+    },
   }
 
-  const inc = cardIdx => {
-    const currentScore = $store.game.scoreCards[cardIdx].scores[$game.step] || 0
+  setContext('controls', controls)
 
-    error = ''
-
-    $store.game.scoreCards[cardIdx].scores[$game.step] = currentScore + 1
-  }
-
-  const dec = cardIdx => {
-    const currentScore = $store.game.scoreCards[cardIdx].scores[$game.step] || 0
-
-    $store.game.scoreCards[cardIdx].scores[$game.step] = Math.max(0, currentScore - 1)
-  }
-
-  const prev = () => {
-    error = ''
-
-    $store.game.step -= 1
-  }
-
-  const checkScores = () => {
-    const anythingNotScored = $game.scoreCards.some(({scores}) =>
-      holes.slice(0, $game.step + 1).some((_, idx) => !scores[idx])
-    )
-
-    if (anythingNotScored) {
-      error = "Please score all players before continuing"
-
-      return false
-    }
-
-    error = ''
-
-    return true
-  }
-
-  const next = () => {
-    if (checkScores()) {
-      $store.game.step += 1
-    }
-  }
-
-  const discard = () => {
-    if (confirm("Are you sure you want to discard this game?")) {
-      navigate('/')
-
-      $store.game = null
-    }
-  }
-
-  const done = () => {
-    if (checkScores()) {
-      $store.game.end = new Date().valueOf()
-
-      navigate('/game/submit')
-    }
-  }
-
-  onMount(() => {
-    if (!$game) {
-      navigate('/')
-    } else {
-      setDuration()
-    }
-  })
-
-  onDestroy(() => clearTimeout(durationTimeout))
+  onMount(() => timer.start($game.started))
+  onDestroy(() => timer.stop())
 </script>
 
 <div class="flex justify-between pb-4">
   <h2 class="font-bold uppercase">Current Game — 9 Holes</h2>
-  <span class="font-mono">{formatTime(duration)}</span>
+  <span class="font-mono">{formatTime($timer)}</span>
 </div>
-<table class="mb-4 w-full">
-{#each $game.scoreCards as card, cardIdx}
-  <tr>
-    <td>{card.player}</td>
-    <td class="text-right">
-      {card.scores.reduce((a, b) => a + b, 0)} Throws
-    </td>
-  </tr>
-{/each}
-</table>
-<Card>
-  <div class="flex justify-between pb-2">
-    <td class="font-bold" on:click={() => navigate(`/hole/${$game.step}`)}>
-      <i class="fas fa-map-marker-alt text-red-500 cursor-pointer" />
-      <span class="pl-2">{holes[$game.step].name}</span>
-    </td>
-    <span>Par {holes[$game.step].par}</span>
-  </div>
-  {#each $game.scoreCards as card, cardIdx}
-    <div class="flex justify-between pb-4">
-      <h3>{card.player}</h3>
-      <div class="flex justify-end items-center">
-        <i
-          class="fas fa-minus-circle text-red-500 cursor-pointer"
-          on:click={() => dec(cardIdx)}/>
-        <div class="font-mono w-8 text-center">{card.scores[$game.step] || 0}</div>
-        <i
-          class="fas fa-plus-circle text-red-500 cursor-pointer"
-          on:click={() => inc(cardIdx)}/>
-      </div>
-    </div>
-  {/each}
-</Card>
-<div class="-mt-2">
-  <small class="underline cursor-pointer" on:click={discard}>Discard Game</small>
+{#if $game.mode === "speedrun"}
+<SpeedMode />
+{:else if $game.mode === "classic"}
+<ClassicMode />
+{:else if $game.mode === "manual"}
+<ClassicMode />
+{/if}
+<div>
+  <small class="underline cursor-pointer" on:click={controls.discard}>
+    Discard Game
+  </small>
 </div>
-<div class="text-red-500 text-center p-10">&nbsp;{error}&nbsp;</div>
-<div class="h-12 bg-red-500 fixed shadow bottom-0 left-0 right-0 font-bold w-full text-white">
-  <div class="container max-w-xl m-auto relative">
-    {#if $game.step > 0}
-      <div on:click={prev} class="absolute left-0 p-3 underline cursor-pointer">
-        <i class="fas fa-caret-left" />
-        {holes[$game.step - 1].name}
-      </div>
-    {/if}
-    <div class="absolute right-0 p-3 underline cursor-pointer">
-      {#if $game.step < holes.length - 1}
-        <div on:click={next}>
-          {holes[$game.step + 1].name}
-          <i class="fas fa-caret-right" />
-        </div>
-      {:else}
-        <div on:click={done}>
-          Finish Game
-        </div>
-      {/if}
-    </div>
-  </div>
-</div>
+<div class="text-red-500 text-center p-10">&nbsp;{$error}&nbsp;</div>

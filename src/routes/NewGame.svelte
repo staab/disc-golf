@@ -2,10 +2,11 @@
   import {onMount} from 'svelte'
   import {navigate} from "svelte-routing"
   import {name} from 'util/course.js'
-  import {players, store} from "util/state.js"
+  import {players, store, cursor} from "util/state.js"
   import Card from 'partials/Card'
 
   let error = ''
+  let mode = cursor(store, ['mode'], 'speedrun')
 
   const addPlayer = () => {
     error = ""
@@ -25,11 +26,10 @@
     }
 
     $store.game = {
-      id: Math.random().toString().slice(2),
-      step: 0,
-      end: null,
-      start: new Date().valueOf(),
+      mode: $mode,
       course: name,
+      started: new Date().valueOf(),
+      id: Math.random().toString().slice(2),
       scoreCards: $players.map(({name}) => ({player: name, scores: []})),
     }
 
@@ -45,6 +45,29 @@
 
 <h2 class="font-bold uppercase pb-4">New Game — 9 Holes</h2>
 <Card>
+  <div class="pb-2">
+    Game Mode
+  </div>
+  <div class="pb-2">
+    <select
+      class="rounded px-3 py-2 text-gray-900 border-gray-500 border border-solid"
+      bind:value={$mode}>
+      <option value="speedrun">Speed Run</option>
+      <option value="classic">Score as you go</option>
+      <option value="manual">Manual entry</option>
+    </select>
+  </div>
+  <div class="mb-2 pl-2 border-l-2 border-solid border-red-500">
+    <small>
+      {#if $mode === "speedrun"}
+      Start the timer when you start the course and fill in your score when you're done.
+      {:else if $mode === "classic"}
+      Record your score throw by throw as you go along.
+      {:else if $mode === "manual"}
+      Anhyzer works offline, but you can use this mode to record your scores any time.
+      {/if}
+    </small>
+  </div>
   <div class="pb-2">Players</div>
   <div class="pb-2">
     {#each $players as player, idx (player.id)}

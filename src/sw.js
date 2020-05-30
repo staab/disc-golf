@@ -3,7 +3,7 @@ import {BackgroundSyncPlugin} from 'workbox-background-sync'
 import {NetworkOnly, NetworkFirst, StaleWhileRevalidate} from 'workbox-strategies'
 
 registerRoute(
-  ({request}) => ['script', 'style'].includes(request.destination),
+  ({request}) => ['empty', 'script', 'style'].includes(request.destination),
   new NetworkFirst({
     cacheName: 'scriptsAndStyles',
   })

@@ -11,13 +11,13 @@ export const getPath = (path, data) => {
   let result = data
 
   path.forEach(p => {
-    result = data[p]
+    result = result[p]
   })
 
   return result
 }
 
-export const setProp = (p, data, value) => {
+export const setProp = (p, value, data) => {
   let result = copy(data)
 
   result[p] = value
@@ -25,8 +25,10 @@ export const setProp = (p, data, value) => {
   return result
 }
 
-export const setPath = ([p, ...path], data, value) =>
-  path.length ? setPath(path, data[p], value) : setProp(p, data, value)
+export const setPath = ([p, ...path], value, data) =>
+  path.length === 0
+    ? setProp(p, value, data)
+    : setProp(p, setPath(path, value, data[p]), data)
 
 export const formatTime = duration => {
   duration = duration / 1000

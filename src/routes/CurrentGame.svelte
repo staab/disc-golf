@@ -14,6 +14,7 @@
 
   const controls = {
     error,
+    timer,
     getScore(card, step) {
       return $store.game.scoreCards[card].scores[step] || 0
     },
@@ -46,10 +47,15 @@
   onDestroy(() => timer.stop())
 </script>
 
-<div class="flex justify-between pb-4">
+<div class="flex justify-between">
   <h2 class="font-bold uppercase">Current Game — 9 Holes</h2>
-  <span class="font-mono">{formatTime($timer)}</span>
+  {#if $game.mode !== "speedrun"}
+    <span class="font-mono">{formatTime($timer)}</span>
+  {/if}
 </div>
+<small class="block underline cursor-pointer pb-4" on:click={controls.discard}>
+  Discard Game
+</small>
 {#if $game.mode === "speedrun"}
 <SpeedMode />
 {:else if $game.mode === "classic"}
@@ -57,9 +63,4 @@
 {:else if $game.mode === "manual"}
 <ClassicMode />
 {/if}
-<div>
-  <small class="underline cursor-pointer" on:click={controls.discard}>
-    Discard Game
-  </small>
-</div>
 <div class="text-red-500 text-center p-10">&nbsp;{$error}&nbsp;</div>

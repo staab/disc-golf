@@ -1,6 +1,10 @@
 <script>
+  import {onMount} from 'svelte'
   import {Link} from 'svelte-routing'
   import Card from 'partials/Card'
+  import {installPrompt} from 'util/state.js'
+
+  onMount(() => $installPrompt && $installPrompt.prompt())
 </script>
 
 <h2 class="text-bold my-4 font-bold">Your scores have been submitted!</h2>

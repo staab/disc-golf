@@ -2,7 +2,7 @@
   import {onMount} from 'svelte'
   import {Router, Route, Link} from "svelte-routing"
   import {name} from 'util/course.js'
-  import {online, game} from 'util/state.js'
+  import {online, game, installPrompt} from 'util/state.js'
   import {replaceSubdomain} from 'util/misc.js'
   import Index from 'routes/Index'
   import Landing from 'routes/Landing'
@@ -33,6 +33,10 @@
   onMount(() => {
     window.addEventListener('online', () => online.set(true))
     window.addEventListener('offline', () => online.set(false))
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault()
+      installPrompt.set(e)
+    })
   })
 </script>
 

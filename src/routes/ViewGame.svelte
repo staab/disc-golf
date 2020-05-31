@@ -19,7 +19,7 @@
     <h2 class="font-bold uppercase">Game at {game.course}</h2>
     <small>on {new Date(game.created).toLocaleDateString()}</small>
   </div>
-  <span class="font-mono">{formatTime(game.end - game.start)}</span>
+  <span class="font-mono">{formatTime(game.duration)}</span>
 </div>
 <Card>
   <ScoreCards scoreCards={scoreCards} />

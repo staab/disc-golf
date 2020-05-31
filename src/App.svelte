@@ -64,10 +64,10 @@
 </style>
 
 <main
-  class="bg-gray-200 inset-0 absolute overflow-y-scroll"
+  class="bg-gray-200 inset-0 absolute overflow-y-scroll text-xl sm:text-base"
   on:click={closeSideNav}>
   <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav text-white">
-    <div class="container max-w-xl m-auto sm:px-3">
+    <div class="sm:px-3">
       {#if name}
       <i class="fas fa-bars absolute pt-1 cursor-pointer" on:click={openSideNav} />
       {/if}
@@ -104,7 +104,7 @@
             </div>
           </Link>
         </li>
-        {#if $game && new Date().valueOf() - $game.start < 24 * 60 * 60 * 1000}
+        {#if $game && new Date().valueOf() - $game.started < 24 * 60 * 60 * 1000}
         <li>
           <Link to="/game/current">
             <div class="p-2 cursor-pointer">

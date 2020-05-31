@@ -72,14 +72,14 @@ export class Timer {
     return this.elapsed.subscribe(f)
   }
   start(startTime) {
-    this.start = startTime || new Date().valueOf()
+    this.startTime = startTime || new Date().valueOf()
     this.timeout = this.tick()
   }
   stop() {
     clearTimeout(this.timeout)
   }
   tick() {
-    this.elapsed.set(new Date().valueOf() - this.start)
+    this.elapsed.set(new Date().valueOf() - this.startTime)
 
     return requestAnimationFrame(() => this.tick())
   }

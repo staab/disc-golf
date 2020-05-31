@@ -54,7 +54,6 @@
       bind:value={$mode}>
       <option value="speedrun">Speed Run</option>
       <option value="classic">Score as you go</option>
-      <option value="manual">Manual entry</option>
     </select>
   </div>
   <div class="mb-2 pl-2 border-l-2 border-solid border-red-500">
@@ -62,9 +61,8 @@
       {#if $mode === "speedrun"}
       Start the timer when you start the course and fill in your score when you're done.
       {:else if $mode === "classic"}
-      Record your score throw by throw as you go along.
-      {:else if $mode === "manual"}
-      Anhyzer works offline, but you can use this mode to record your scores any time.
+      Record your score throw by throw as you go along. Also works to record your time
+      and scores after the fact.
       {/if}
     </small>
   </div>

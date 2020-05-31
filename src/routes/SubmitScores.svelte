@@ -67,7 +67,7 @@
   input {
     line-height: 0.9;
     padding: 0 1px;
-    width: 83px;
+    width: 100px;
   }
 </style>
 

@@ -7,7 +7,6 @@
   import {formatTime, Timer} from 'util/misc.js'
   import SpeedMode from 'partials/SpeedMode'
   import ClassicMode from 'partials/ClassicMode'
-  import ManualMode from 'partials/ManualMode'
 
   const timer = new Timer()
   const error = writable('')
@@ -59,8 +58,6 @@
 {#if $game.mode === "speedrun"}
 <SpeedMode />
 {:else if $game.mode === "classic"}
-<ClassicMode />
-{:else if $game.mode === "manual"}
 <ClassicMode />
 {/if}
 <div class="text-red-500 text-center p-10">&nbsp;{$error}&nbsp;</div>

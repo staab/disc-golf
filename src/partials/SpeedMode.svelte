@@ -11,13 +11,7 @@
   let scoreInput
 
   const {timer, done} = getContext('controls')
-  const step = cursor(game, ['step'], 'timer')
   const scores = $game.scoreCards.map((_, idx) => cursor(game, ['scoreCards', idx, 'scores']))
-
-  const next = () => {
-    timer.stop()
-    step.set('scores')
-  }
 
   const setSelection = n => {
     selection = n
@@ -45,18 +39,6 @@
   }
 </script>
 
-{#if $step === 'timer'}
-<div class="flex py-20 text-4xl justify-center items-center font-mono">
-  <span>{formatTime($timer)}</span>
-</div>
-<div class="flex justify-center">
-  <span class="bg-red-500 rounded py-2 px-4 font-bold text-white cursor-pointer" on:click={next}>
-    Stop Timer
-  </span>
-</div>
-{/if}
-
-{#if $step === 'scores'}
 <Card>
   <ul>
   {#each $game.scoreCards as card, cardIdx}
@@ -87,11 +69,17 @@
   {/each}
   </ul>
 </Card>
+<div class="flex justify-center">
+  <span
+    class="bg-red-500 rounded py-2 px-4 font-bold text-white cursor-pointer"
+    on:click={() => $timer.running ? timer.stop() : timer.start()}>
+    {$timer.lastTick ? 'Stop Timer' : 'Resume Timer'}
+  </span>
+</div>
 {#if $game.scoreCards.every(({scores}) => scores.length === holes.length)}
 <div class="flex justify-center pt-8 pb-10" in:fly>
   <span class="bg-red-500 rounded py-2 px-4 font-bold text-white cursor-pointer" on:click={done}>
     Finish Game
   </span>
 </div>
-{/if}
 {/if}

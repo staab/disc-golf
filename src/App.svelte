@@ -104,7 +104,7 @@
             </div>
           </Link>
         </li>
-        {#if $game && new Date().valueOf() - $game.started < 24 * 60 * 60 * 1000}
+        {#if $game && new Date().valueOf() - $game.startTime < 24 * 60 * 60 * 1000}
         <li>
           <Link to="/game/current">
             <div class="p-2 cursor-pointer">

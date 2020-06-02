@@ -1,5 +1,3 @@
-import {writable} from 'svelte/store'
-
 export const copy = x => {
   if (x instanceof Array) return [...x]
   if (x instanceof Object) return {...x}
@@ -62,25 +60,4 @@ export const round = (n, digits = 0) => {
   const magnitude = Math.pow(10, digits)
 
   return Math.round(n / magnitude) * magnitude
-}
-
-export class Timer {
-  constructor() {
-    this.elapsed = writable(0)
-  }
-  subscribe(f) {
-    return this.elapsed.subscribe(f)
-  }
-  start(startTime) {
-    this.startTime = startTime || new Date().valueOf()
-    this.timeout = this.tick()
-  }
-  stop() {
-    clearTimeout(this.timeout)
-  }
-  tick() {
-    this.elapsed.set(new Date().valueOf() - this.startTime)
-
-    return requestAnimationFrame(() => this.tick())
-  }
 }

@@ -6,7 +6,6 @@
   import Card from 'partials/Card'
 
   let error = ''
-  let mode = cursor(store, ['mode'], 'speedrun')
 
   const addPlayer = () => {
     error = ""
@@ -26,9 +25,8 @@
     }
 
     $store.game = {
-      mode: $mode,
       course: name,
-      started: new Date().valueOf(),
+      startTime: new Date().valueOf(),
       id: Math.random().toString().slice(2),
       scoreCards: $players.map(({name}) => ({player: name, scores: []})),
     }
@@ -45,27 +43,6 @@
 
 <h2 class="font-bold uppercase pb-4">New Game — 9 Holes</h2>
 <Card>
-  <div class="pb-2">
-    Game Mode
-  </div>
-  <div class="pb-2">
-    <select
-      class="rounded px-3 py-2 text-gray-900 border-gray-500 border border-solid"
-      bind:value={$mode}>
-      <option value="speedrun">Speed Run</option>
-      <option value="classic">Score as you go</option>
-    </select>
-  </div>
-  <div class="mb-2 pl-2 border-l-2 border-solid border-red-500">
-    <small>
-      {#if $mode === "speedrun"}
-      Start the timer when you start the course and fill in your score when you're done.
-      {:else if $mode === "classic"}
-      Record your score throw by throw as you go along. Also works to record your time
-      and scores after the fact.
-      {/if}
-    </small>
-  </div>
   <div class="pb-2">Players</div>
   <div class="pb-2">
     {#each $players as player, idx (player.id)}

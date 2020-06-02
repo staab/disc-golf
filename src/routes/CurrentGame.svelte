@@ -3,10 +3,9 @@
   import {writable} from 'svelte/store'
   import {navigate} from 'svelte-routing'
   import {holes} from 'util/course.js'
-  import {game, store, cursor} from 'util/state.js'
-  import {formatTime, Timer} from 'util/misc.js'
+  import {game, store, cursor, Timer} from 'util/state.js'
+  import {formatTime} from 'util/misc.js'
   import SpeedMode from 'partials/SpeedMode'
-  import ClassicMode from 'partials/ClassicMode'
 
   const timer = new Timer()
   const error = writable('')
@@ -33,7 +32,7 @@
     },
     done: () => {
       if (!$error) {
-        $store.game.duration = $timer
+        $store.game.duration = $timer.elapsed
 
         navigate('/game/submit')
       }
@@ -42,22 +41,16 @@
 
   setContext('controls', controls)
 
-  onMount(() => timer.start($game.started))
+  onMount(() => timer.start($game.startTime))
   onDestroy(() => timer.stop())
 </script>
 
 <div class="flex justify-between">
   <h2 class="font-bold uppercase">Current Game — 9 Holes</h2>
-  {#if $game.mode !== "speedrun"}
-    <span class="font-mono">{formatTime($timer)}</span>
-  {/if}
+  <span class="font-mono">{formatTime($timer.elapsed)}</span>
 </div>
 <small class="block underline cursor-pointer pb-4" on:click={controls.discard}>
   Discard Game
 </small>
-{#if $game.mode === "speedrun"}
 <SpeedMode />
-{:else if $game.mode === "classic"}
-<ClassicMode />
-{/if}
 <div class="text-red-500 text-center p-10">&nbsp;{$error}&nbsp;</div>

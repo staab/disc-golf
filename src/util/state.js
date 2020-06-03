@@ -1,4 +1,4 @@
-import {writable, derived, get} from 'svelte/store'
+import {writable} from 'svelte/store'
 import {prop, getPath, setPath} from 'util/misc.js'
 
 export const cursor = (s, path, defaultValue = null) => {
@@ -24,49 +24,7 @@ export const players = cursor(store, ['players'])
 export const game = cursor(store, ['game'])
 
 store.subscribe($store => {
-  if (!process.env.PRODUCTION) {
-    console.log($store)
-  }
+  window.$store = $store
 
   localStorage.setItem('store', JSON.stringify($store))
 })
-
-
-export class Timer {
-  constructor() {
-    this._previouslyElapsed = 0
-    this.startTime = writable(null)
-    this.currentTime = writable(null)
-    this.elapsed = derived(
-      [this.startTime, this.currentTime],
-      ([startTime, currentTime]) =>
-        (currentTime - startTime || 0) + this._previouslyElapsed
-    )
-
-    this.publicState = derived(
-      [this.startTime, this.elapsed],
-      ([startTime, elapsed]) =>
-        ({running: Boolean(startTime), elapsed})
-    )
-  }
-  subscribe(f) {
-    return this.publicState.subscribe(f)
-  }
-  start(startTime = new Date().valueOf()) {
-    this.startTime.set(startTime)
-    this.tick()
-  }
-  stop() {
-    this._previouslyElapsed = get(this.elapsed)
-    this.startTime.set(null)
-  }
-  tick() {
-    if (!get(this.startTime)) {
-      return
-    }
-
-    this.currentTime.set(new Date().valueOf())
-
-    requestAnimationFrame(() => this.tick())
-  }
-}

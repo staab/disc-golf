@@ -26,6 +26,7 @@
 
     $store.game = {
       course: name,
+      duration: 0,
       startTime: new Date().valueOf(),
       id: Math.random().toString().slice(2),
       scoreCards: $players.map(({name}) => ({player: name, scores: []})),

@@ -8,7 +8,6 @@
   import Landing from 'routes/Landing'
   import NewGame from 'routes/NewGame'
   import CurrentGame from 'routes/CurrentGame'
-  import SubmitScores from 'routes/SubmitScores'
   import GameOver from 'routes/GameOver'
   import ViewGame from 'routes/ViewGame'
   import Leaders from 'routes/Leaders'
@@ -79,7 +78,6 @@
     <div class="container max-w-xl m-auto mt-10 p-3">
       <Route path="game/new" component={NewGame} />
       <Route path="game/current" component={CurrentGame} />
-      <Route path="game/submit" component={SubmitScores} />
       <Route path="game/complete" component={GameOver} />
       <Route path="game/:id" component={ViewGame} />
       <Route path="leaders" component={Leaders} />

@@ -1,11 +1,13 @@
 <script>
   import {onMount, onDestroy} from 'svelte'
+  import {Link} from 'svelte-routing'
   import {fly} from 'svelte/transition'
   import {writable, get} from 'svelte/store'
   import {navigate} from 'svelte-routing'
   import {holes} from 'util/course.js'
   import {game, store, cursor} from 'util/state.js'
   import {formatTime, sum} from 'util/misc.js'
+  import {Game, ScoreCard} from 'util/api.js'
   import Card from 'partials/Card'
 
   // Track time
@@ -26,6 +28,11 @@
       const now = new Date().valueOf()
 
       $game.duration = savedDuration + now - lastStart
+
+      // Keep focus on the invisible score input
+      if (scoreInput && scoreInput !== document.activeElement) {
+        scoreInput.focus()
+      }
 
       requestAnimationFrame(tick)
     }())
@@ -120,8 +127,29 @@
     }
   }
 
-  const done = () => {
-    navigate('/game/submit')
+  const submitScores = async () => {
+    if (!window.avoidSideEffects) {
+      await Promise.all([
+        Game.save({
+          id: $game.id,
+          course: $game.course,
+          duration: $game.duration,
+        }),
+        ScoreCard.bulkCreate(
+          $game.scoreCards.map(({player, scores}) => ({
+            player,
+            game: $game.id,
+            score: sum(scores),
+            scores: JSON.stringify(scores),
+            duration: $game.duration,
+          }))
+        ),
+      ])
+    }
+
+    navigate('/game/complete')
+
+    $store.game = null
   }
 
   onMount(() => startTimer())
@@ -191,11 +219,16 @@
 
 <div class="flex justify-center pt-8 pb-10" in:fly>
 {#if !lastStart && !editedTime && $game.scoreCards.every(({scores}) => scores.length === holes.length)}
-  <span
-    class="bg-red-500 rounded py-2 px-4 font-bold text-white cursor-pointer"
-    on:click={done}>
-    Finish Game
-  </span>
+  <div>
+    <div
+      class="bg-red-500 rounded py-2 px-4 font-bold text-white cursor-pointer"
+      on:click={submitScores}>
+      Submit Scores
+    </div>
+    <div class="text-sm text-center pt-1">
+      Or, <span class="underline cursor-pointer"><Link to="/">Go Home</Link></span>
+    </div>
+  </div>
 {:else}
   <span
     class="bg-white rounded py-2 px-4 font-bold cursor-pointer border border-gray-500 border-solid"

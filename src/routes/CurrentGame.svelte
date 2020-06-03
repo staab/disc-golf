@@ -6,7 +6,7 @@
   import {navigate} from 'svelte-routing'
   import {holes} from 'util/course.js'
   import {game, store, cursor} from 'util/state.js'
-  import {formatTime, sum} from 'util/misc.js'
+  import {formatTime, formatScore, sum} from 'util/misc.js'
   import {Game, ScoreCard} from 'util/api.js'
   import Card from 'partials/Card'
 
@@ -115,6 +115,22 @@
     $store.game.scoreCards[cardIdx].scores[step] = value
   }
 
+  const showScoreSoFar = scores => {
+    let total = 0
+    let totalPar = 0
+
+    for (let i in scores) {
+      if (!scores[i]) {
+        break
+      }
+
+      total += scores[i]
+      totalPar += holes[i].par
+    }
+
+    return formatScore(total, totalPar)
+  }
+
   // Game control
 
   const discard = () => {
@@ -206,7 +222,7 @@
             }
           }}>
         {/if}
-        <div class="text-right w-24 whitespace-no-wrap">{sum(card.scores)} Throws</div>
+        <div class="text-right w-24 whitespace-no-wrap">{showScoreSoFar(card.scores)}</div>
       </div>
       <div class="text-right font-mono text-sm">
         {holes.map((_, i) => card.scores[i] || 0).join(', ')}

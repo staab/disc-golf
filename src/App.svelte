@@ -11,7 +11,6 @@
   import GameOver from 'routes/GameOver'
   import ViewGame from 'routes/ViewGame'
   import Leaders from 'routes/Leaders'
-  import Hole from 'routes/Hole'
   import Card from 'partials/Card'
   import Map from 'partials/Map'
 
@@ -81,7 +80,6 @@
       <Route path="game/complete" component={GameOver} />
       <Route path="game/:id" component={ViewGame} />
       <Route path="leaders" component={Leaders} />
-      <Route path="hole/:id" component={Hole} />
       <Route path="*"><Landing /></Route>
     </div>
     <div class="side-nav h-full w-full fixed top-0 left-0" class:side-nav-open={sideNavIsOpen}>

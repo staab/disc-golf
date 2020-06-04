@@ -61,3 +61,5 @@ export const round = (n, digits = 0) => {
 
   return Math.round(n / magnitude) * magnitude
 }
+
+export const log = (base, n) => Math.log(n) / Math.log(base)

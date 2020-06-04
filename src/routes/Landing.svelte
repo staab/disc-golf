@@ -1,13 +1,12 @@
 <script>
   import {Link} from "svelte-routing"
-  import {listBestScores, listBestTimes} from 'util/api.js'
+  import {listBest} from 'util/api.js'
   import {view, start, holes} from 'util/course.js'
   import Leaderboard from 'partials/Leaderboard'
   import Card from 'partials/Card'
   import Map from 'partials/Map'
 
-  const bestScores = listBestScores({limit: 5, })
-  const bestTimes = listBestTimes({limit: 5})
+  const bestScores = listBest({limit: 5})
 
   const mapCallback = map => {
     L.marker([start.lon, start.lat]).addTo(map).bindPopup(`<b>Start</b>`)
@@ -34,5 +33,4 @@
     </Link>
   </div>
 </Card>
-<Leaderboard title="Best Scores" promise={bestScores} more="/leaders" />
-<Leaderboard title="Fastest Times" promise={bestTimes} more="/leaders" />
+<Leaderboard title="Best Speedruns" promise={bestScores} more="/leaders" />

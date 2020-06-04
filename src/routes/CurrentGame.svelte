@@ -143,6 +143,8 @@
     }
   }
 
+  const calcScore = (time, score) => Math.round((time + score * 20000) / 1000)
+
   const submitScores = async () => {
     if (!window.avoidSideEffects) {
       await Promise.all([
@@ -158,6 +160,7 @@
             score: sum(scores),
             scores: JSON.stringify(scores),
             duration: $game.duration,
+            compositeScore: calcScore($game.duration, sum(scores)),
           }))
         ),
       ])

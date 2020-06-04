@@ -9,23 +9,12 @@ const daysAgo = days =>
 export const Game = Backendless.Data.of('game')
 export const ScoreCard = Backendless.Data.of('score_card')
 
-export const listBestScores = ({limit}) => {
+export const listBest = ({limit}) => {
   const qb = Backendless.DataQueryBuilder.create()
   const date = daysAgo(30)
 
   qb.setPageSize(limit)
-  qb.setSortBy(['score'])
-  qb.setWhereClause(`created after ${date}`)
-
-  return ScoreCard.find(qb)
-}
-
-export const listBestTimes = ({limit}) => {
-  const qb = Backendless.DataQueryBuilder.create()
-  const date = daysAgo(30)
-
-  qb.setPageSize(limit)
-  qb.setSortBy(['duration asc'])
+  qb.setSortBy(['compositeScore'])
   qb.setWhereClause(`created after ${date}`)
 
   return ScoreCard.find(qb)

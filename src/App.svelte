@@ -62,7 +62,7 @@
 </style>
 
 <main
-  class="bg-gray-200 inset-0 absolute overflow-y-scroll text-lg sm:text-base"
+  class="bg-gray-200 inset-0 absolute overflow-y-scroll"
   on:click={closeSideNav}>
   <div class="h-10 bg-red-500 p-2 fixed w-full shadow top-nav text-white">
     <div class="sm:px-3">

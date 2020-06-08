@@ -22,6 +22,9 @@
   </span>
 </div>
 <Card>
+  <div class="mb-4 p-2 pl-4 border-l-2 border-solid border-red-500">
+    Scores are calculated as number of seconds in speedrun + 20 seconds for each throw.
+  </div>
   <table class="w-full mb-2">
     <tr>
       <th class="p-2 pl-0 text-left">Player</th>

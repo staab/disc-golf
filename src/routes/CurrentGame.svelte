@@ -168,6 +168,7 @@
 
     navigate('/game/complete')
 
+    $store.prevGame = $store.game
     $store.game = null
   }
 

@@ -63,3 +63,7 @@ export const round = (n, digits = 0) => {
 }
 
 export const log = (base, n) => Math.log(n) / Math.log(base)
+
+export const randChoice = xs => xs[Math.floor(Math.random() * xs.length)]
+
+export const randInt = (low, high) => Math.round(Math.random() * (high - low) + low)

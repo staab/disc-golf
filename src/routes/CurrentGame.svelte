@@ -89,6 +89,12 @@
     setTimeout(() => scoreInput && scoreInput.focus())
   }
 
+  const handleKeyDown = evt => {
+    if (evt.key === 'Backspace') {
+      popScore(selectedCard)
+    }
+  }
+
   const addScore = evt => {
     const score = parseInt(evt.target.value)
 
@@ -220,6 +226,7 @@
           class="w-0 score-input"
           bind:this={scoreInput}
           on:input={addScore}
+          on:keydown={handleKeyDown}
           on:blur={function() {
             if (!editedTime) {
               this.focus()

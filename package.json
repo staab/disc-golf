@@ -1,13 +1,14 @@
 {
-  "name": "svelte-app",
+  "name": "anhyzer.io",
   "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
     "build:web": "rollup -c rollup.web.js",
     "build:sw": "rollup -c rollup.sw.js",
     "build": "run-p build:*",
     "dev:web": "rollup -c rollup.web.js -w",
     "dev:sw": "rollup -c rollup.sw.js -w",
-    "dev": "run-p dev:*",
+    "dev": "export $(cat .env) && run-p dev:*",
     "start": "node --experimental-modules server.mjs"
   },
   "devDependencies": {

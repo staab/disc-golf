@@ -12,7 +12,13 @@ Alternatively, use affiliate links with Amazon, https://infinitediscs.com/Affili
 [x] Handle errors when submitting scores, show empty results when retrieving stuff
 [x] Add directory
 [x] Intercept and cache scoreboard via sw when offline
-[ ] Fix touch targets on ios
-[ ] Handle online/offline events and give folks hints that it's ok to submit scores when offline
-[ ] Add a way to enter scores/times in manually (maybe this won't be necessary with it being a PWA)
-[ ] Add fun ads
+[x] Fix touch targets on ios
+[x] Handle online/offline events and give folks hints that it's ok to submit scores when offline
+[x] Add a way to enter scores/times in manually (maybe this won't be necessary with it being a PWA)
+[x] Add fun ads
+[ ] Allow backspace as a way to remove most recent score
+[ ] Fix display bug with adding players on narrow screens
+[ ] Show game summary after submitting scores
+[ ] Add University of Idaho
+[ ] Add Potlatch
+[ ] Add Pullman

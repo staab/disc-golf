@@ -16,8 +16,9 @@ Alternatively, use affiliate links with Amazon, https://infinitediscs.com/Affili
 [x] Handle online/offline events and give folks hints that it's ok to submit scores when offline
 [x] Add a way to enter scores/times in manually (maybe this won't be necessary with it being a PWA)
 [x] Add fun ads
-[ ] Allow backspace as a way to remove most recent score
-[ ] Fix display bug with adding players on narrow screens
+[x] Allow backspace as a way to remove most recent score
+[x] Fix display bug with adding players on narrow screens
+[x] Add contact form
 [ ] Show game summary after submitting scores
 [ ] Add University of Idaho
 [ ] Add Potlatch

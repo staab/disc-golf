@@ -18,7 +18,7 @@
   <h2 class="font-bold uppercase">{title}</h2>
   <span>
     <i class="fas fa-calendar-alt" />
-    Last 30 days
+    Last 365 days
   </span>
 </div>
 <Card>
@@ -47,7 +47,7 @@
     </tr>
     {:else}
     <tr>
-      <td>No games in the last 30 days</td>
+      <td>No games in the last 365 days</td>
     </tr>
     {/each}
   </table>
